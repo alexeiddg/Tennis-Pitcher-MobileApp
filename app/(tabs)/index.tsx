@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@/constants/types';
 import { Colors } from '@/constants/Colors';
 import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
+import { initializeBluetooth, disconnectDevice, sendValue } from "@/connection/linker";
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
 
@@ -16,12 +17,21 @@ export default function Index({ navigation }: Props) {
     const colorScheme = useColorScheme();
     const themeColors = Colors[colorScheme ?? 'dark'];
 
+    useEffect(() => {
+        initializeBluetooth();
+
+        return () => {
+            disconnectDevice();
+        };
+    }, []);
+
     const handleDTagPress = () => {
         // Handle D1 button press
     };
 
     const handleButtonPress = (controller: string) => {
         navigation.navigate('Controller', { someProp: controller });
+        sendValue('1')
     };
 
     return (
@@ -29,7 +39,7 @@ export default function Index({ navigation }: Props) {
             <Text style={[styles.text, { color: themeColors.text }]}>Tennis Pitcher S32</Text>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D1"} />
-                <Button onPress={() => handleButtonPress("Speed")} title="Speed" />
+                <Button onPress={() => handleButtonPress("Speed")} title="Speed"  />
             </View>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D2"} />
