@@ -1,31 +1,35 @@
-const tintColorLight = '#0A7EA4';
-const tintColorDark = '#FFFFFF';
+const tintColorLight = '#becb73';
+const tintColorDark = '#becb73';
 
 export const Colors = {
   light: {
-    text: '#11181C',
+    text: '#1e1d1a',
     background: '#FFFFFF',
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    icon: '#707251',
+    tabIconDefault: '#8c8c94',
     tabIconSelected: tintColorLight,
-    greenButtonBackground: '#4CAF50',
-    greenButtonBorder: '#388E3C',
-    yellowAlertIcon: '#FFEB3B',
-    sortButtonBackground: '#212121',
-    sortButtonText: '#BDBDBD',
+    buttonBackground: '#85992a',
+    buttonBorder: '#4f600a',
+    alertIcon: '#bae718',
+    secondaryBackground: '#454431',
+    headerBackground: '#3b3b3c',
+    sortButtonBackground: '#3b441c',
+    sortButtonText: '#535354',
   },
   dark: {
     text: '#ECEDEE',
-    background: '#151718',
+    background: '#1e1d1a',
     tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
+    icon: '#707251',
+    tabIconDefault: '#8c8c94',
     tabIconSelected: tintColorDark,
-    greenButtonBackground: '#4CAF50',
-    greenButtonBorder: '#388E3C',
-    yellowAlertIcon: '#FFEB3B',
-    sortButtonBackground: '#212121',
-    sortButtonText: '#BDBDBD',
+    buttonBackground: '#85992a',
+    buttonBorder: '#4f600a',
+    alertIcon: '#bae718',
+    secondaryBackground: '#454431',
+    headerBackground: '#3b3b3c',
+    sortButtonBackground: '#3b441c',
+    sortButtonText: '#535354',
   },
 };
