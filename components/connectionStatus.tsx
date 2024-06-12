@@ -1,26 +1,31 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Colors } from "@/constants/Colors";
+import { scanAndConnect, isDeviceConnected } from "@/connection/linker";
 
 const ConnectionCard = ({}) => {
-    const ConnectionStatus = true
-    if (ConnectionStatus) {
+    const handleRetryButton = () => {
+        scanAndConnect();
+    };
+
+    if (isDeviceConnected()) {
         return (
             <View style={[styles.card]}>
                 <View style={[styles.center]}>
                     <Image style={[styles.image1]} source={require('../assets/images/connection.png')} />
                 </View>
-                <Text style={styles.text}>Connected To Pitcher</Text>
+                <Text style={[styles.text, {paddingTop: 8}]}>Connected To Pitcher</Text>
             </View>
         );
     } else {
         return (
-            <View style={[styles.card]}>
+            <TouchableOpacity style={[styles.card]} onPress={handleRetryButton}>
                 <View style={[styles.center]}>
                     <Image style={[styles.image2]} source={require('../assets/images/no-connection.png')} />
                 </View>
                 <Text style={styles.text}>No Connection</Text>
-            </View>
+                <Text style={styles.textSmall}>Tap to Retry</Text>
+            </TouchableOpacity>
         );
     }
 };
@@ -32,6 +37,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.dark.sortButtonBackground,
         width: '90%',
         height: '35%',
+        paddingBottom: 8,
     },
     text: {
         fontSize: 16,
@@ -57,6 +63,13 @@ const styles = StyleSheet.create({
     center: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textSmall: {
+        fontSize: 10,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#FFFFFF',
+        margin: 4,
     }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, Image } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 type ControllerButtonProps = {
@@ -12,6 +12,7 @@ export default function Button({ onPress, title }: ControllerButtonProps) {
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <View style={styles.innerButton}>
                 <View style={styles.outerSquare}>
+                    <Image style={[styles.image]} source={require('../../assets/images/tennis-ball.png')}></Image>
                 </View>
                 <Text style={styles.text}>{title}</Text>
             </View>
@@ -41,10 +42,19 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: Colors.dark.sortButtonBackground,
         marginRight: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     text: {
         color: '#FFFFFF',
         fontSize: 16,
         textAlign: 'left',
     },
+    image: {
+        width: '70%',
+        height: '70%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        resizeMode: 'contain',
+    }
 });

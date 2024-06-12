@@ -5,6 +5,7 @@ const manager = new BleManager();
 let connectedDevice: Device | null = null;
 let retryCount = 0;
 const maxRetries = 5;
+let isConnected = false;
 
 export const initializeBluetooth = (): void => {
     manager.onStateChange((state) => {
@@ -14,7 +15,7 @@ export const initializeBluetooth = (): void => {
     }, true);
 };
 
-const scanAndConnect = (): void => {
+export const scanAndConnect = (): void => {
     manager.startDeviceScan(null, null, (error, device) => {
         if (error) {
             console.error('Device scan error:', error);
@@ -28,10 +29,12 @@ const scanAndConnect = (): void => {
                 .then((device) => {
                     connectedDevice = device;
                     retryCount = 0; // Reset retry count on successful connection
+                    isConnected = true; // Set connection status to true
                     console.log('Connected to', device.name);
                 })
                 .catch((error: BleError) => {
                     console.error('Connection error:', error);
+                    isConnected = false; // Set connection status to false
                     if (retryCount < maxRetries) {
                         retryCount++;
                         console.log(`Retrying connection... (${retryCount}/${maxRetries})`);
@@ -64,8 +67,14 @@ export const disconnectDevice = (): void => {
         connectedDevice.cancelConnection()
             .then(() => {
                 connectedDevice = null;
+                isConnected = false; // Set connection status to false
                 console.log('Disconnected');
             })
             .catch((error) => console.error('Disconnection error:', error));
     }
+};
+
+// Export a function to return the connection status
+export const isDeviceConnected = (): boolean => {
+    return isConnected;
 };

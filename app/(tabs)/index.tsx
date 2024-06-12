@@ -7,6 +7,7 @@ import { initializeBluetooth, disconnectDevice } from "@/connection/linker";
 import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
+import DynamicButton from "@/components/dynamicButton";
 
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
@@ -31,6 +32,10 @@ export default function Index({ navigation }: Props) {
         // Handle D tag button press
     };
 
+    const loadCurrentCOnfig = () => {
+
+    }
+
     const handleButtonPress = (controller: string) => {
         navigation.navigate('Controller', { someProp: controller });
     };
@@ -43,7 +48,7 @@ export default function Index({ navigation }: Props) {
                 <View style={styles.buttonsWrapper}>
                     <View style={styles.buttonsContainer}>
                         <SideButton onPress={handleDTagPress} dTag={"D1"} />
-                        <Button onPress={() => handleButtonPress("Speed")} title="Speed" />
+                        <Button onPress={() => handleButtonPress("Feed")} title="Feed" />
                     </View>
                     <View style={styles.buttonsContainer}>
                         <SideButton onPress={handleDTagPress} dTag={"D2"} />
@@ -59,8 +64,17 @@ export default function Index({ navigation }: Props) {
                     </View>
                     <View style={styles.buttonsContainer}>
                         <SideButton onPress={handleDTagPress} dTag={"D5"} />
-                        <Button onPress={() => handleButtonPress("???")} title="???" />
+                        <Button onPress={() => handleButtonPress("Direction")} title="Direction" />
                     </View>
+                </View>
+                <View style={styles.buttonsContainer}>
+                    <DynamicButton
+                        outline={true}
+                        fill={themeColors.tint}
+                        textColor={themeColors.text}
+                        text="Load Saved Configuration"
+                        onPress={loadCurrentCOnfig}
+                    />
                 </View>
                 <View style={styles.bottomFill} />
             </ScrollView>
@@ -71,6 +85,7 @@ export default function Index({ navigation }: Props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 35,
     },
     scrollViewContent: {
         alignItems: 'center',
@@ -78,8 +93,9 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     text: {
-        fontSize: 18,
+        fontSize: 22,
         marginBottom: 20,
+        fontWeight: 'bold',
     },
     buttonsWrapper: {
         width: '100%',
