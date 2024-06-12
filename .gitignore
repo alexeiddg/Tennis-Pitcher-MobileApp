@@ -1,14 +1,65 @@
+# Ignore node_modules
 node_modules/
-.expo/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
 
-# macOS
+# Ignore Expo's directory
+.expo/
+.expo-shared/
+
+# Ignore system files
 .DS_Store
+
+# Ignore build output directories
+build/
+dist/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore IDE and editor directories
+.vscode/
+.idea/
+
+# Ignore npm and yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore bundler output
+.bundle
+
+# Ignore environment variables
+.env
+.env.*
+.env.local
+
+# Ignore Metro bundler cache
+metro-cache/
+
+# Ignore React Native cache
+react-native/packager-info.json
+react-native/touchHistory/touchHistoryCache*
+
+# Ignore assets from the Android and iOS build process
+android/
+ios/
+
+# Ignore generated config files
+babel.config.js
+tsconfig.json
+
+# Ignore package manager lock files
+package-lock.json
+yarn.lock
+
+# Ignore expo specific files
+expo/
+
+# Ignore test coverage output
+coverage/
+
+# Ignore TypeScript build outputs
+*.tsbuildinfo
+
+# Ignore specific directories or files as needed
+scripts/

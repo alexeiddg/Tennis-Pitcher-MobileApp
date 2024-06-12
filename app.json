@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alexeiddg.PitcherS32"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,16 +22,10 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "plugins": [
       "expo-router"
     ],
     "experiments": {
-      "typedRoutes": true
     }
   }
 }

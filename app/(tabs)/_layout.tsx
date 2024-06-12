@@ -1,37 +1,23 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import 'react-native-gesture-handler';
+import * as React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { createStackNavigator } from '@react-navigation/stack';
+import Index from './index';
+import Controllers from './controllers';
+import { RootStackParamList } from "@/constants/types";
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+const Stack = createStackNavigator<RootStackParamList>();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+export default function Layout() {
+    return (
+        <Stack.Navigator
+            initialRouteName="Index"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="Index" component={ Index } />
+            <Stack.Screen name="Controller" component={ Controllers } />
+        </Stack.Navigator>
+    );
 }
