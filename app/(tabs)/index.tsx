@@ -20,8 +20,8 @@ export default function Index({ navigation }: Props) {
         // Handle D1 button press
     };
 
-    const handleButtonPress = () => {
-        navigation.navigate('Controller', { someProp: 'Some Value' });
+    const handleButtonPress = (controller: string) => {
+        navigation.navigate('Controller', { someProp: controller });
     };
 
     return (
@@ -29,23 +29,23 @@ export default function Index({ navigation }: Props) {
             <Text style={[styles.text, { color: themeColors.text }]}>Tennis Pitcher S32</Text>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D1"} />
-                <Button onPress={ handleButtonPress } title="Speed" />
+                <Button onPress={() => handleButtonPress("Speed")} title="Speed" />
             </View>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D2"} />
-                <Button onPress={ handleButtonPress } title="Height" />
+                <Button onPress={() => handleButtonPress("Height")} title="Height" />
             </View>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D3"} />
-                <Button onPress={ handleButtonPress } title="Backspin" />
+                <Button onPress={() => handleButtonPress("Backspin")} title="Backspin" />
             </View>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D4"} />
-                <Button onPress={ handleButtonPress } title="Topspin" />
+                <Button onPress={() => handleButtonPress("Topspin")} title="Topspin" />
             </View>
             <View style={styles.buttonsContainer}>
                 <SideButton onPress={ handleDTagPress } dTag={"D5"} />
-                <Button onPress={ handleButtonPress } title="???" />
+                <Button onPress={() => handleButtonPress("???")} title="???" />
             </View>
         </View>
     );
