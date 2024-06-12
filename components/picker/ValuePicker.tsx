@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 interface PickerComponentProps {
     values: { value: number; label: string }[];
     defaultValue: number;
+    propName: string;
+    onValueChange: (value: number) => void;
 }
 
-const PickerComponent = ({ values, defaultValue }: PickerComponentProps) => {
+const PickerComponent = ({ values, defaultValue, propName, onValueChange }: PickerComponentProps) => {
     const [selectedValue, setSelectedValue] = useState(defaultValue);
+
+    const handleValueChange = (itemValue: number) => {
+        setSelectedValue(itemValue);
+        onValueChange(itemValue);
+    };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Select a Value:</Text>
-            <Picker
-                selectedValue={selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue) => setSelectedValue(itemValue)}
-            >
-                {values.map((item) => (
-                    <Picker.Item key={item.value} label={item.label} value={item.value} />
-                ))}
-            </Picker>
+            <View style={styles.pickerWrapper}>
+                <Picker
+                    selectedValue={selectedValue}
+                    style={styles.picker}
+                    onValueChange={handleValueChange}
+                    itemStyle={styles.pickerItem}
+                >
+                    {values.map((item) => (
+                        <Picker.Item key={item.value} label={item.label} value={item.value} />
+                    ))}
+                </Picker>
+                <View style={styles.selectedHighlight} />
+            </View>
         </View>
     );
 };
@@ -32,16 +42,33 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#181818',
+        padding: 20,
     },
-    label: {
-        fontSize: 18,
-        color: '#FFFFFF',
-        marginBottom: 10,
+    pickerWrapper: {
+        borderWidth: 2,
+        borderColor: '#FFFFFF',
+        borderRadius: 5,
+        overflow: 'hidden',
+        position: 'relative',
     },
     picker: {
-        height: 50,
+        height: 200,
         width: 150,
         color: '#FFFFFF',
+    },
+    pickerItem: {
+        color: '#FFFFFF',
+        fontSize: 18,
+    },
+    selectedHighlight: {
+        position: 'absolute',
+        top: '54%',
+        left: 2,
+        right: 2,
+        height: 50,
+        marginTop: -25,
+        borderWidth: 2,
+        borderColor: '#bae718',
     },
 });
 
