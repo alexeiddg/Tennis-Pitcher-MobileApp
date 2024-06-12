@@ -55,3 +55,7 @@ export const disconnectDevice = (): void => {
             .catch((error) => console.error('Disconnection error:', error));
     }
 };
+
+export const isConnected = (): boolean => {
+    return !!connectedDevice;
+}
