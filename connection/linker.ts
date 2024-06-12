@@ -1,7 +1,10 @@
-import { BleManager, Device, State, Characteristic } from 'react-native-ble-plx';
+import { BleManager, Device, State, BleError, Characteristic } from 'react-native-ble-plx';
+import base64 from 'base64-js';
 
 const manager = new BleManager();
 let connectedDevice: Device | null = null;
+let retryCount = 0;
+const maxRetries = 5;
 
 export const initializeBluetooth = (): void => {
     manager.onStateChange((state) => {
@@ -24,19 +27,30 @@ const scanAndConnect = (): void => {
                 .then((device) => device.discoverAllServicesAndCharacteristics())
                 .then((device) => {
                     connectedDevice = device;
+                    retryCount = 0; // Reset retry count on successful connection
                     console.log('Connected to', device.name);
                 })
-                .catch((error) => console.error('Connection error:', error));
+                .catch((error: BleError) => {
+                    console.error('Connection error:', error);
+                    if (retryCount < maxRetries) {
+                        retryCount++;
+                        console.log(`Retrying connection... (${retryCount}/${maxRetries})`);
+                        scanAndConnect();
+                    } else {
+                        console.error('Max retries reached. Could not connect to device.');
+                    }
+                });
         }
     });
 };
 
 export const sendValue = (value: string): void => {
     if (connectedDevice) {
+        const base64Value = base64.fromByteArray(new TextEncoder().encode(value));
         connectedDevice.writeCharacteristicWithResponseForService(
             '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
             'beb5483e-36e1-4688-b7f5-ea07361b26a8',
-            Buffer.from(value).toString('base64')
+            base64Value
         )
             .then((characteristic: Characteristic) => console.log('Value sent:', value))
             .catch((error) => console.error('Write characteristic error:', error));
@@ -55,7 +69,3 @@ export const disconnectDevice = (): void => {
             .catch((error) => console.error('Disconnection error:', error));
     }
 };
-
-export const isConnected = (): boolean => {
-    return !!connectedDevice;
-}

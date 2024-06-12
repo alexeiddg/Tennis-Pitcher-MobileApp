@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
-import { isConnected } from "@/connection/linker";
 import { Colors } from "@/constants/Colors";
 
 const ConnectionCard = ({}) => {
-    const ConnectionStatus = isConnected();
+    const ConnectionStatus = true
     if (ConnectionStatus) {
         return (
             <View style={[styles.card]}>

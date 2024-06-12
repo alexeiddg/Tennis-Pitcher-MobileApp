@@ -21,6 +21,7 @@
     "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "base64-js": "^1.5.1",
     "expo": "~51.0.13",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.17",

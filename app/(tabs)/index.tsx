@@ -3,10 +3,11 @@ import { ScrollView, View, Text, StyleSheet, useColorScheme } from 'react-native
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@/constants/types';
 import { Colors } from '@/constants/Colors';
+import { initializeBluetooth, disconnectDevice } from "@/connection/linker";
 import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
-import { initializeBluetooth, disconnectDevice, sendValue } from "@/connection/linker";
+
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
 
@@ -27,12 +28,11 @@ export default function Index({ navigation }: Props) {
     }, []);
 
     const handleDTagPress = () => {
-        // Handle D1 button press
+        // Handle D tag button press
     };
 
     const handleButtonPress = (controller: string) => {
         navigation.navigate('Controller', { someProp: controller });
-        sendValue('1')
     };
 
     return (
@@ -97,6 +97,6 @@ const styles = StyleSheet.create({
     },
     bottomFill: {
         backgroundColor: Colors.dark.background,
-        height: 100, // Adjust height as needed to cover the bottom space
+        height: 100,
     },
 });
