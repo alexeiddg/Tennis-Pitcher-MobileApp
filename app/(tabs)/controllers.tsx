@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, useColorScheme, ScrollView } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as FileSystem from 'expo-file-system';
 import { RootStackParamList } from "@/constants/types";
 import { Colors } from '@/constants/Colors';
 import { valuesSpeedHeight, valuesSpin } from "@/constants/pickerValues";
 import PickerComponent from "@/components/picker/ValuePicker";
 import DynamicButton from "@/components/dynamicButton";
-import { config, saveConfigToFile } from '@/storage/packgaeHeader';
+import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
+import { sendJsonToEsp32, initializeBluetooth, disconnectDevice } from '@/connection/linker';
 
 type ControllerScreenRouteProp = RouteProp<RootStackParamList, 'Controller'>;
 type ControllerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Controller'>;
@@ -33,22 +33,23 @@ export default function ControllerScreen({ route, navigation }: Props) {
     const [pickerValue, setPickerValue] = useState(0);
 
     useEffect(() => {
-        const loadConfig = async () => {
-            const fileUri = FileSystem.documentDirectory + 'currentConfig.json';
-            try {
-                const configFile = await FileSystem.readAsStringAsync(fileUri);
-                Object.assign(config, JSON.parse(configFile));
-                console.log('Loaded config:', config);
-            } catch (error) {
-                console.error('Error reading config file:', error);
-            }
+        const initialize = async () => {
+            await loadOrCreateConfig();
+            setPickerValue(config[someProp.toLowerCase() as keyof typeof config]);
+            initializeBluetooth();
         };
-        loadConfig();
-    }, []);
+
+        initialize();
+
+        return () => {
+            disconnectDevice();
+        };
+    }, [someProp]);
 
     const handleButtonPress = async () => {
         config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
         await saveConfigToFile();
+        await sendJsonToEsp32();
     };
 
     return (
@@ -59,7 +60,12 @@ export default function ControllerScreen({ route, navigation }: Props) {
             </TouchableOpacity>
             <Text style={[styles.toptext, { color: themeColors.text }]}>Set New Drill: {someProp}</Text>
             <View style={styles.pickerContainer}>
-                <PickerComponent values={values} defaultValue={0} propName={someProp.toLowerCase()} onValueChange={setPickerValue} />
+                <PickerComponent
+                    values={values}
+                    defaultValue={config[someProp.toLowerCase() as keyof typeof config]}
+                    propName={someProp.toLowerCase()}
+                    onValueChange={setPickerValue}
+                />
             </View>
             <View style={styles.buttonsContainer}>
                 <DynamicButton

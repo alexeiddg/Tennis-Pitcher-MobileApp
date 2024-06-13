@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 interface PickerComponentProps {
@@ -12,10 +12,9 @@ interface PickerComponentProps {
 const PickerComponent = ({ values, defaultValue, propName, onValueChange }: PickerComponentProps) => {
     const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-    const handleValueChange = (itemValue: number) => {
-        setSelectedValue(itemValue);
-        onValueChange(itemValue);
-    };
+    useEffect(() => {
+        setSelectedValue(defaultValue);
+    }, [defaultValue]);
 
     return (
         <View style={styles.container}>
@@ -23,7 +22,10 @@ const PickerComponent = ({ values, defaultValue, propName, onValueChange }: Pick
                 <Picker
                     selectedValue={selectedValue}
                     style={styles.picker}
-                    onValueChange={handleValueChange}
+                    onValueChange={(itemValue) => {
+                        setSelectedValue(itemValue);
+                        onValueChange(itemValue);
+                    }}
                     itemStyle={styles.pickerItem}
                 >
                     {values.map((item) => (

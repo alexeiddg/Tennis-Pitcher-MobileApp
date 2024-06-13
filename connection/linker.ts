@@ -1,4 +1,5 @@
-import { BleManager, Device, State, BleError, Characteristic } from 'react-native-ble-plx';
+import {BleManager, Device, BleError, Characteristic, State} from 'react-native-ble-plx';
+import * as FileSystem from 'expo-file-system';
 import base64 from 'base64-js';
 
 const manager = new BleManager();
@@ -77,4 +78,33 @@ export const disconnectDevice = (): void => {
 // Export a function to return the connection status
 export const isDeviceConnected = (): boolean => {
     return isConnected;
+};
+
+// Function to send the JSON file to the ESP32 via Bluetooth
+export const sendJsonToEsp32 = async (): Promise<void> => {
+    if (!connectedDevice) {
+        console.error('No device connected');
+        return;
+    }
+
+    const fileUri = FileSystem.documentDirectory + 'storage/package/currentConfig.json';
+
+    try {
+        // Read the JSON file content
+        const jsonContent = await FileSystem.readAsStringAsync(fileUri);
+
+        // Convert the JSON content to base64
+        const base64Content = base64.fromByteArray(new TextEncoder().encode(jsonContent));
+
+        // Write the base64 content to the ESP32 characteristic
+        await connectedDevice.writeCharacteristicWithResponseForService(
+            '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
+            'beb5483e-36e1-4688-b7f5-ea07361b26a8',
+            base64Content
+        );
+
+        console.log('JSON content sent to ESP32:', jsonContent);
+    } catch (error) {
+        console.error('Error sending JSON to ESP32:', error);
+    }
 };
