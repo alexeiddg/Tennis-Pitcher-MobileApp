@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     picker: {
         height: 250,
-        width: 350,
+        width: 320,
         color: '#FFFFFF',
     },
     pickerItem: {

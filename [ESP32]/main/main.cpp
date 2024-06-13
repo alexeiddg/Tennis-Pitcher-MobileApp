@@ -66,25 +66,45 @@ class MyCallbacks: public BLECharacteristicCallbacks {
                     int motorValue = doc[key].as<int>();
                     Serial.printf("%s: %d\n", key, motorValue);
 
-                    // Map values to motors
+                    // Map values to motors and print mappings
                     if (strcmp(key, "feed") == 0) {
-                        dacWrite(MOTOR1_DAC_PIN, map(motorValue, 0, 100, 0, 255));
+                        int mappedValue = map(motorValue, 0, 100, 0, 255);
+                        dacWrite(MOTOR1_DAC_PIN, mappedValue);
+                        Serial.printf("Mapped 'feed' to MOTOR1_DAC_PIN (GPIO %d): %d\n", MOTOR1_DAC_PIN, mappedValue);
+
+                        // Turn LED on or off based on 'feed' value
+                        if (motorValue > 50) { // Adjust threshold as needed
+                            digitalWrite(LED_PIN, HIGH);
+                            Serial.println("LED turned ON");
+                        } else {
+                            digitalWrite(LED_PIN, LOW);
+                            Serial.println("LED turned OFF");
+                        }
                     } else if (strcmp(key, "height") == 0) {
-                        dacWrite(MOTOR2_DAC_PIN, map(motorValue, 0, 100, 0, 255));
+                        int mappedValue = map(motorValue, 0, 100, 0, 255);
+                        dacWrite(MOTOR2_DAC_PIN, mappedValue);
+                        Serial.printf("Mapped 'height' to MOTOR2_DAC_PIN (GPIO %d): %d\n", MOTOR2_DAC_PIN, mappedValue);
                     } else if (strcmp(key, "backspin") == 0) {
-                        ledcWrite(0, map(motorValue, 0, 100, 0, 255)); // PWM Motor 3
+                        int mappedValue = map(motorValue, 0, 100, 0, 255);
+                        ledcWrite(0, mappedValue); // PWM Motor 3
+                        Serial.printf("Mapped 'backspin' to MOTOR3_PWM_PIN (GPIO %d): %d\n", MOTOR3_PWM_PIN, mappedValue);
                     } else if (strcmp(key, "topspin") == 0) {
-                        ledcWrite(1, map(motorValue, 0, 100, 0, 255)); // PWM Motor 4
+                        int mappedValue = map(motorValue, 0, 100, 0, 255);
+                        ledcWrite(1, mappedValue); // PWM Motor 4
+                        Serial.printf("Mapped 'topspin' to MOTOR4_PWM_PIN (GPIO %d): %d\n", MOTOR4_PWM_PIN, mappedValue);
                     } else if (strcmp(key, "direction") == 0) {
                         if (motorValue <= 1100) {
                             digitalWrite(MOTOR5_DIR_PIN1, HIGH);
                             digitalWrite(MOTOR5_DIR_PIN2, LOW);
+                            Serial.printf("Mapped 'direction' to MOTOR5_DIR_PIN1 (GPIO %d) HIGH, MOTOR5_DIR_PIN2 (GPIO %d) LOW\n", MOTOR5_DIR_PIN1, MOTOR5_DIR_PIN2);
                         } else if (motorValue >= 3500) {
                             digitalWrite(MOTOR5_DIR_PIN2, HIGH);
                             digitalWrite(MOTOR5_DIR_PIN1, LOW);
+                            Serial.printf("Mapped 'direction' to MOTOR5_DIR_PIN2 (GPIO %d) HIGH, MOTOR5_DIR_PIN1 (GPIO %d) LOW\n", MOTOR5_DIR_PIN2, MOTOR5_DIR_PIN1);
                         } else {
                             digitalWrite(MOTOR5_DIR_PIN1, LOW);
                             digitalWrite(MOTOR5_DIR_PIN2, LOW);
+                            Serial.printf("Mapped 'direction' to MOTOR5_DIR_PIN1 (GPIO %d) LOW, MOTOR5_DIR_PIN2 (GPIO %d) LOW\n", MOTOR5_DIR_PIN1, MOTOR5_DIR_PIN2);
                         }
                     }
                 }

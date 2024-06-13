@@ -71,6 +71,8 @@ export default function Index({ navigation }: Props) {
                     />
                 </View>
                 <View style={styles.bottomFill} />
+                <View style={styles.bottomFill} />
+                <View style={styles.bottomFill} />
             </ScrollView>
         </View>
     );
