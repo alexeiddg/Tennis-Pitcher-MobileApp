@@ -6,6 +6,7 @@ interface Config {
     backspin: number;
     topspin: number;
     direction: number;
+    exec: number;
     [key: string]: number;
 }
 
@@ -15,6 +16,7 @@ const config: Config = {
     backspin: 0,
     topspin: 0,
     direction: 0,
+    exec: 0,
 };
 
 const fileUri = FileSystem.documentDirectory + 'storage/package/currentConfig.json';

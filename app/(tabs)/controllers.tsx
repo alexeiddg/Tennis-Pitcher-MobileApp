@@ -12,6 +12,7 @@ import {
 } from "@/constants/pickerValues";
 import PickerComponent from "@/components/picker/ValuePicker";
 import DynamicButton from "@/components/dynamicButton";
+import TennisCourt from "@/components/tennis-court";
 import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
 import { sendJsonToEsp32, initializeBluetooth } from '@/connection/linker';
 
@@ -56,13 +57,20 @@ export default function ControllerScreen({ route, navigation }: Props) {
         await sendJsonToEsp32();
     };
 
+    const execConfig = async () => {
+        config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
+        config.exec = 1
+        await saveConfigToFile();
+        await sendJsonToEsp32();
+    }
+
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
             <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
                 <Image source={require('../../assets/images/arrow-left.png')} style={styles.goBackImage} />
-                <Text style={styles.goBackText}>Back</Text>
             </TouchableOpacity>
             <Text style={[styles.toptext, { color: themeColors.text }]}>Set New Drill: {someProp}</Text>
+            <TennisCourt />
             <View style={styles.pickerContainer}>
                 <PickerComponent
                     values={values}
@@ -77,7 +85,7 @@ export default function ControllerScreen({ route, navigation }: Props) {
                     fill={themeColors.tint}
                     textColor={themeColors.text}
                     text="Simulate Drill"
-                    onPress={handleButtonPress}
+                    onPress={execConfig}
                 />
             </View>
             <View style={styles.buttonsContainer}>
@@ -90,7 +98,7 @@ export default function ControllerScreen({ route, navigation }: Props) {
                 />
             </View>
             <View style={styles.bottomFill} />
-        </ScrollView>
+        </View>
     );
 }
 
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        top: 10,
+        top: 79,
         left: 10,
         padding: 5,
     },
@@ -119,6 +127,7 @@ const styles = StyleSheet.create({
         width: 15,
         height: 15,
         marginRight: 5,
+        marginLeft: 20,
     },
     goBackText: {
         color: '#fff',

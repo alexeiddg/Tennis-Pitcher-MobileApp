@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     picker: {
-        height: 200,
-        width: 150,
+        height: 250,
+        width: 350,
         color: '#FFFFFF',
     },
     pickerItem: {
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     },
     selectedHighlight: {
         position: 'absolute',
-        top: '54%',
+        top: '35%',
         left: 2,
         right: 2,
         height: 50,
-        marginTop: -25,
+        marginTop: -1,
         borderWidth: 2,
         borderColor: '#bae718',
     },
