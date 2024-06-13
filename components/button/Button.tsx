@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 8,
-        backgroundColor: Colors.dark.sortButtonBackground,
+        backgroundColor: Colors.dark.buttonBackground,
         marginRight: 12,
         justifyContent: 'center',
         alignItems: 'center',

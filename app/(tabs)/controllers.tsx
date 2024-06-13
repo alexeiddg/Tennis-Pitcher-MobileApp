@@ -4,11 +4,16 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from "@/constants/types";
 import { Colors } from '@/constants/Colors';
-import { valuesSpeedHeight, valuesSpin } from "@/constants/pickerValues";
+import {
+    valuesFeed,
+    valuesSpin,
+    valuesHeight,
+    valuesDirection,
+} from "@/constants/pickerValues";
 import PickerComponent from "@/components/picker/ValuePicker";
 import DynamicButton from "@/components/dynamicButton";
 import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
-import { sendJsonToEsp32, initializeBluetooth, disconnectDevice } from '@/connection/linker';
+import { sendJsonToEsp32, initializeBluetooth } from '@/connection/linker';
 
 type ControllerScreenRouteProp = RouteProp<RootStackParamList, 'Controller'>;
 type ControllerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Controller'>;
@@ -24,11 +29,10 @@ export default function ControllerScreen({ route, navigation }: Props) {
     const { someProp } = route.params;
     let values = undefined;
 
-    if (someProp === 'Speed' || someProp === 'Height') {
-        values = valuesSpeedHeight;
-    } else {
-        values = valuesSpin;
-    }
+    if (someProp === 'Feed') values = valuesFeed;
+    else if (someProp === 'Height') values = valuesHeight;
+    else if (someProp === 'Direction') values = valuesDirection;
+    else values = valuesSpin;
 
     const [pickerValue, setPickerValue] = useState(0);
 
@@ -42,7 +46,7 @@ export default function ControllerScreen({ route, navigation }: Props) {
         initialize();
 
         return () => {
-            disconnectDevice();
+            console.log("Initializing controller screen");
         };
     }, [someProp]);
 

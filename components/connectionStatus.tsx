@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Colors } from "@/constants/Colors";
 import { scanAndConnect, isDeviceConnected } from "@/connection/linker";
 
-const ConnectionCard = ({}) => {
+const ConnectionCard = () => {
+    const [connectionStatus, setConnectionStatus] = useState<boolean | undefined>(undefined);
+
     const handleRetryButton = () => {
         scanAndConnect();
     };
 
-    if (isDeviceConnected()) {
+    useEffect(() => {
+        const checkConnection = () => {
+            const status = isDeviceConnected();
+            setConnectionStatus(status);
+        };
+
+        // Check connection status periodically
+        const interval = setInterval(checkConnection, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    if (connectionStatus) {
         return (
             <View style={[styles.card]}>
                 <View style={[styles.center]}>
                     <Image style={[styles.image1]} source={require('../assets/images/connection.png')} />
                 </View>
-                <Text style={[styles.text, {paddingTop: 8}]}>Connected To Pitcher</Text>
+                <Text style={[styles.text, { paddingTop: 8 }]}>Connected To Pitcher</Text>
             </View>
         );
     } else {

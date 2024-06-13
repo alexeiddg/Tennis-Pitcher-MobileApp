@@ -3,7 +3,6 @@ import { ScrollView, View, Text, StyleSheet, useColorScheme } from 'react-native
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@/constants/types';
 import { Colors } from '@/constants/Colors';
-import { initializeBluetooth, disconnectDevice } from "@/connection/linker";
 import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
@@ -19,14 +18,6 @@ type Props = {
 export default function Index({ navigation }: Props) {
     const colorScheme = useColorScheme();
     const themeColors = Colors[colorScheme ?? 'dark'];
-
-    useEffect(() => {
-        initializeBluetooth();
-
-        return () => {
-            disconnectDevice();
-        };
-    }, []);
 
     const handleDTagPress = () => {
         // Handle D tag button press
