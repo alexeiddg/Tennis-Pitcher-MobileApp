@@ -15,6 +15,7 @@ import DynamicButton from "@/components/dynamicButton";
 import TennisCourt from "@/components/tennis-court";
 import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
 import { sendJsonToEsp32, initializeBluetooth } from '@/connection/linker';
+import thenElse from "ajv/lib/vocabularies/applicator/thenElse";
 
 type ControllerScreenRouteProp = RouteProp<RootStackParamList, 'Controller'>;
 type ControllerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Controller'>;
@@ -53,15 +54,17 @@ export default function ControllerScreen({ route, navigation }: Props) {
 
     const handleButtonPress = async () => {
         config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
+        config.exec = 1;
         await saveConfigToFile();
         await sendJsonToEsp32();
+        config.exec = 0;
     };
 
     const execConfig = async () => {
         config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
-        config.exec = 1
         await saveConfigToFile();
-        await sendJsonToEsp32();
+        await sendJsonToEsp32()
+        config.exec = 0;
     }
 
     return (
