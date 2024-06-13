@@ -32,6 +32,14 @@
       "expo-router",
       "react-native-ble-plx"
     ],
-    "experiments": {}
+    "experiments": {},
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a8a5652e-6ff6-4cb8-96f2-fde036b53f31"
+      }
+    }
   }
 }

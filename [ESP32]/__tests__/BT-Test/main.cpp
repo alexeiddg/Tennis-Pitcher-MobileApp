@@ -3,6 +3,7 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#include <ArduinoJson.h>
 
 #define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
@@ -15,11 +16,13 @@ BLECharacteristic *pCharacteristic;
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       deviceConnected = true;
+      digitalWrite(LED_PIN, HIGH);
       Serial.println("Device connected");
     };
 
     void onDisconnect(BLEServer* pServer) {
       deviceConnected = false;
+      digitalWrite(LED_PIN, LOW);
       Serial.println("Device disconnected");
     }
 };
@@ -34,12 +37,15 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         }
         Serial.println();
 
-        if (value == "1") {
-          digitalWrite(LED_PIN, HIGH);
-          Serial.println("LED is ON");
-        } else if (value == "0") {
-          digitalWrite(LED_PIN, LOW);
-          Serial.println("LED is OFF");
+        // Parse JSON and log each value
+        DynamicJsonDocument doc(1024);
+        deserializeJson(doc, value);
+
+        const char* keys[] = {"feed", "height", "backspin", "topspin", "direction"};
+        for (const char* key : keys) {
+          if (doc.containsKey(key)) {
+            Serial.printf("%s: %d\n", key, doc[key].as<int>());
+          }
         }
       }
     }
@@ -48,6 +54,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 void setup() {
   Serial.begin(115200);
   pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, LOW);
 
   BLEDevice::init("ESP32_BLE");
   BLEServer *pServer = BLEDevice::createServer();
