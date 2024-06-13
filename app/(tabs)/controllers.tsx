@@ -54,17 +54,18 @@ export default function ControllerScreen({ route, navigation }: Props) {
 
     const handleButtonPress = async () => {
         config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
-        config.exec = 1;
+        config.exec = 0;
         await saveConfigToFile();
         await sendJsonToEsp32();
-        config.exec = 0;
     };
 
     const execConfig = async () => {
+        config.exec = 1;
         config[someProp.toLowerCase() as keyof typeof config] = pickerValue;
         await saveConfigToFile();
         await sendJsonToEsp32()
         config.exec = 0;
+
     }
 
     return (

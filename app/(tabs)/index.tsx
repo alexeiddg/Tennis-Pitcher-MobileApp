@@ -8,6 +8,7 @@ import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
 import DynamicButton from "@/components/dynamicButton";
+import { config } from '../../connection/packgaeHeader';
 
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
@@ -25,6 +26,7 @@ export default function Index({ navigation }: Props) {
     };
 
     const loadCurrentCOnfig = async () => {
+        config.exec = 1;
         await sendJsonToEsp32()
     }
 
