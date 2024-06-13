@@ -8,7 +8,7 @@ import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
 import DynamicButton from "@/components/dynamicButton";
-import { config } from '../../connection/packgaeHeader';
+import { config } from '@/connection/packgaeHeader';
 
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
