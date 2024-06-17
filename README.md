@@ -1,50 +1,66 @@
-# Welcome to your Expo app 👋
+# Tennis Pitcher Control App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This project features a custom-built tennis pitcher designed and constructed by our team. The accompanying codebase includes a React Native app that allows users to control the tennis pitcher via Bluetooth Low Energy (BLE), communicating with a programmed ESP32 microprocessor. The system operates with 5 motors to control the feed, height, backspin, topspin, and direction of the tennis pitcher. Users can save configurations locally or execute them directly from their device for seamless and personalized training sessions.
 
-## Get started
+## Key Features
 
-1. Install dependencies
+- **Bluetooth Low Energy (BLE) Control**: Wirelessly manage the tennis pitcher using a React Native app.
+- **ESP32 Microprocessor**: Programmed to handle communication and control of 5 motors.
+- **Motor Functions**: Adjust feed, height, backspin, topspin, and direction for optimal training.
+- **Local Storage**: Save and execute custom configurations directly from the user's device.
 
-   ```bash
-   npm install
-   ```
+## Technologies Used
 
-2. Start the app
+- **React Native**: Front-end mobile application development.
+- **ESP32**: Microprocessor programming for motor control.
+- **Bluetooth Low Energy (BLE)**: Wireless communication protocol.
 
-   ```bash
-    npx expo start
-   ```
+## Getting Started
 
-In the output, you'll find options to open the app in a
+### Prerequisites
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Node.js and npm installed
+- Expo CLI installed
+- Android Studio (for Android development) or Xcode (for iOS development)
+- An ESP32 development board
+- React Native development environment set up
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Installation
 
-## Get a fresh project
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/yourusername/tennis-pitcher-control-app.git
+    cd tennis-pitcher-control-app
+    ```
 
-When you're ready, run:
+2. **Install Dependencies**:
+    ```bash
+    npm install
+    ```
 
-```bash
-npm run reset-project
-```
+3. **Start the App**:
+    ```bash
+    expo start
+    ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+4. **Run on Android Device**:
+    ```bash
+    expo run:android
+    ```
 
-## Learn more
+5. **Run on iOS Device**:
+    ```bash
+    expo run:ios
+    ```
 
-To learn more about developing your project with Expo, look at the following resources:
+6. **Program the ESP32**:
+   - Follow the instructions in the `esp32/README.md` to upload the firmware to the microprocessor.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Usage
 
-## Join the community
+- **Connect to the Tennis Pitcher**: Open the app and connect to the tennis pitcher via Bluetooth.
+- **Control Motors**: Adjust the feed, height, backspin, topspin, and direction using the app controls.
+- **Save Configurations**: Save your custom configurations locally on your device.
+- **Execute Configurations**: Directly execute saved configurations for your training sessions.
 
-Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
