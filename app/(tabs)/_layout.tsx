@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from './index';
 import Controllers from './controllers';
 import { RootStackParamList } from "@/constants/types";
-import {useEffect} from "react";
-import {disconnectDevice, initializeBluetooth} from "@/connection/linker";
+import { useEffect}  from "react";
+import { initializeBluetooth } from "@/connection/linker";
 
 const Stack = createStackNavigator<RootStackParamList>();
 

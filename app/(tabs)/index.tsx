@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ScrollView, View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@/constants/types';
 import { Colors } from '@/constants/Colors';
+import { config } from '@/connection/packgaeHeader';
 import { sendJsonToEsp32 } from '@/connection/linker'
 import SideButton from '@/components/button/Side-Button';
 import Button from '@/components/button/Button';
 import ConnectionCard from "@/components/connectionStatus";
 import DynamicButton from "@/components/dynamicButton";
-import { config } from '@/connection/packgaeHeader';
-
 
 type IndexScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Index'>;
 

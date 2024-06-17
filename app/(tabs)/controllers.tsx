@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, useColorScheme, Scroll
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from "@/constants/types";
+import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
+import { sendJsonToEsp32, initializeBluetooth } from '@/connection/linker';
 import { Colors } from '@/constants/Colors';
 import {
     valuesFeed,
@@ -13,9 +15,6 @@ import {
 import PickerComponent from "@/components/picker/ValuePicker";
 import DynamicButton from "@/components/dynamicButton";
 import TennisCourt from "@/components/tennis-court";
-import { config, saveConfigToFile, loadOrCreateConfig } from '@/connection/packgaeHeader';
-import { sendJsonToEsp32, initializeBluetooth } from '@/connection/linker';
-import thenElse from "ajv/lib/vocabularies/applicator/thenElse";
 
 type ControllerScreenRouteProp = RouteProp<RootStackParamList, 'Controller'>;
 type ControllerScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Controller'>;

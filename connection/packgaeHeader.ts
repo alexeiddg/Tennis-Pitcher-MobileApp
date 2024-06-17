@@ -37,7 +37,6 @@ const loadOrCreateConfig = async (): Promise<void> => {
     }
 };
 
-// Function to convert config object to JSON and save it to a file
 export const saveConfigToFile = async (): Promise<void> => {
     try {
         const dirInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'storage/package');

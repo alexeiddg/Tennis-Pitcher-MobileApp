@@ -1,4 +1,4 @@
-import {BleManager, Device, BleError, Characteristic, State} from 'react-native-ble-plx';
+import { BleManager, Device, BleError, Characteristic, State } from 'react-native-ble-plx';
 import * as FileSystem from 'expo-file-system';
 import base64 from 'base64-js';
 
@@ -29,13 +29,13 @@ export const scanAndConnect = (): void => {
                 .then((device) => device.discoverAllServicesAndCharacteristics())
                 .then((device) => {
                     connectedDevice = device;
-                    retryCount = 0; // Reset retry count on successful connection
-                    isConnected = true; // Set connection status to true
+                    retryCount = 0;
+                    isConnected = true;
                     console.log('Connected to', device.name);
                 })
                 .catch((error: BleError) => {
                     console.error('Connection error:', error);
-                    isConnected = false; // Set connection status to false
+                    isConnected = false;
                     if (retryCount < maxRetries) {
                         retryCount++;
                         console.log(`Retrying connection... (${retryCount}/${maxRetries})`);
@@ -75,12 +75,10 @@ export const disconnectDevice = (): void => {
     }
 };
 
-// Export a function to return the connection status
 export const isDeviceConnected = (): boolean => {
     return isConnected;
 };
 
-// Function to send the JSON file to the ESP32 via Bluetooth
 export const sendJsonToEsp32 = async (): Promise<void> => {
     if (!connectedDevice) {
         console.error('No device connected');
@@ -90,13 +88,10 @@ export const sendJsonToEsp32 = async (): Promise<void> => {
     const fileUri = FileSystem.documentDirectory + 'storage/package/currentConfig.json';
 
     try {
-        // Read the JSON file content
         const jsonContent = await FileSystem.readAsStringAsync(fileUri);
 
-        // Convert the JSON content to base64
         const base64Content = base64.fromByteArray(new TextEncoder().encode(jsonContent));
 
-        // Write the base64 content to the ESP32 characteristic
         await connectedDevice.writeCharacteristicWithResponseForService(
             '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
             'beb5483e-36e1-4688-b7f5-ea07361b26a8',
