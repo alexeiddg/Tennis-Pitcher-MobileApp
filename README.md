@@ -16,6 +16,7 @@ This project features a custom-built tennis pitcher designed and constructed by 
 - **React Native**: Front-end mobile application development.
 - **ESP32**: Microprocessor programming for motor control.
 - **Bluetooth Low Energy (BLE)**: Wireless communication protocol.
+- **JSON:** For Storing and Sending Configurations to the ESP32 
 
 ## Usage
 
